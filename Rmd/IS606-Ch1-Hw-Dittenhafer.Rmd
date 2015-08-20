@@ -1,0 +1,48 @@
+---
+title: "IS606-Ch1-Hw"
+author: "Daniel Dittenhafer"
+date: "September 1, 2015"
+output: html_document
+---
+
+### 1.8 Smoking habits of UK residents
+
+#### (a) What does each row of the data matrix represent?
+
+Each row of the data matrix represents a sample.
+
+#### (b) How many participants were included in the survey?
+
+Assuming row 1961 is the last row of the data, then 1691 participants were included in the survey.
+
+#### (c) Indicate whether each variable in the study is numerical or categorical.
+
+* sex: Categorical
+* age: Numerical, Discrete
+* marital: Categorical
+* grossIncome: Categorical, Ordinal
+* smoke: Categorical
+* amtWeekends: Numerical, Discrete
+* amtWeekdays: Numerical, Discrete
+
+
+### 1.10 Cheaters, scope of inference
+
+#### (a) Identify the population of interest and the sample in this study.
+
+The population is children between ages 5 and 15. The sample was 160 children within the age range.
+
+#### (b) Comment on whether or not the results of the study can be generalized to the population, and whether the findings of the study can be used to establish a causal relationship.
+
+The sample size is small compared to the assumed population (all children 5-15). Also, it isn't clear how the sample was selected. As such, I am skeptical that the results could or should be generalted to the population.
+
+The study is described as an experiment, with the independent variable being the instruction to cheat (or lack of instruction), and dependent variable being the cheating outcome. Based on the information in the 1.5 exercise write-up, a causal relationship is not supported. Age appears to be a confounding variable, but age alone is unlikely to be the driver... rather the maturity of the child more likely drives the probability of cheating. Either way, I don't see how this study could be used to establish a causal relationship.
+
+
+
+
+
+```{r}
+
+```
+
