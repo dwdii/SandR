@@ -1,3 +1,5 @@
+# https://htmlpreview.github.io/?https://github.com/jbryer/IS606Fall2015/blob/master/Pages/1_Intro_to_Data.html
+
 # OpenIntro Ch1 Exercise 1.7
 print("OpenIntro Ch1 Exercise 1.7")
 
