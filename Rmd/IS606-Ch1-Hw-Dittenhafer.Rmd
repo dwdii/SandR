@@ -39,7 +39,7 @@ The sample size is small compared to the assumed population (all children 5-15).
 The study is described as an experiment, with the independent variable being the instruction to cheat (or lack of instruction), and dependent variable being the cheating outcome. Based on the information in the 1.5 exercise write-up, a causal relationship is not supported. Age appears to be a confounding variable, but age alone is unlikely to be the driver... rather the maturity of the child more likely drives the probability of cheating. Either way, I don't see how this study could be used to establish a causal relationship.
 
 
-
+### 1.28 
 
 
 ```{r}
