@@ -43,7 +43,7 @@ The study is described as an experiment, with the independent variable being the
 
 #### (a) Risks: Smokers Found More Prone to Dementia
 
-Based on the study, I take away the conclusion that smoking (implied to be tobacco) is correlated with dementia. This may be related to a chemical response from nicotine, but may not be. It could be driven instead by another chemical in the smoke. The description of the study suggests an "experiement" structure, an individual would always be aware if they are smoking or not, therefore a blind control group would not be possible.
+Based on the study, I take away the conclusion that smoking (implied to be tobacco) is correlated with dementia. This may be related to a chemical response from nicotine, but may not be. It could be driven instead by another chemical in the smoke, or some other factor common to smokers. The description of the study suggests an "experiment" structure, an individual would always be aware if they are smoking or not, therefore a blind control group would not be possible.
 
 #### (b) The School Bully Is Sleepy
 
