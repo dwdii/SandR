@@ -1,0 +1,94 @@
+---
+title: "ISDA609 Week 1 Homework"
+author: "Daniel Dittenhafer"
+date: "August 27, 2015"
+output: html_document
+---
+
+### Page 8, Problem #10
+
+#### Annuity
+
+* Interest Rate: 1%
+* Withdrawl: $1000/month
+* Current Value: $50,000
+
+The dynamical system can be modeled using the following equation:
+
+\[a_{n+1} = a_n + 0.01a_n - 1000, a_0 = 50000\]
+
+The `annuityModel` function defines the basic dynamical system:
+
+```{r}
+annuityModel <- function(a_n, i, w)
+{
+  a_next <- a_n + (a_n * i) - w
+  
+  return (a_next)
+}
+```
+
+If we run the model through some iterations, what happens?
+
+```{r}
+# Setup variables related to the annuity
+a <- 50000
+rate <- 0.01
+withdrawl <- 1000
+# Store results in a data frame.
+result <- data.frame(month=c(0), value=c(a))
+# Loop through time
+for(n in 1:100)
+{
+  a <- annuityModel(a, rate, withdrawl)
+  
+  result <- rbind(result, c(n, a))
+  
+  if(a < 0)
+  {
+    # End when a_n is less than zero
+    break
+  }
+}
+
+# Update data frame names to be user friendly.
+colnames(result) <- c("month", "value")
+
+# show some raw data
+head(result)
+tail(result)
+```
+
+The annuity will run out of money after `r n` months. When the annuity is depleted, the value of \(a_n\) would be `r result$value[n + 1]` if the full withdrawal were allowed. Otherwise \(a_n\) will be 0.
+
+The visualization below shows the graphical representation of the dynamical system.
+
+```{r, echo=FALSE}
+plot(result, main="Annuity")
+```
+
+### Page 17, Problem #9
+
+```{r}
+n <- 1:16
+speed <- n * 5
+a_n <- c(3,6,11,21,32,47,65,87,112,140,171,204,241,282,325,376)
+d_an <- c()
+d_an[0] <- NA
+for(i in 1:length(a_n))
+{
+  d_an[i] <- a_n[i] - a_n[i - 1] 
+}
+
+d9 <- data.frame(n, speed, a_n, d_an)
+
+d9
+```
+
+#### (a) The visualization below plots the change in \(a_n\) vs \(n\). 
+
+As you can see, the graph does reasonably approximate a linear relationship.
+
+```{r, echo=FALSE}
+plot(d9[,c("n", "d_an")], main="Change in a_n vs n")
+```
