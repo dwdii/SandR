@@ -2,7 +2,7 @@
 title: "ISDA609 Week 1 Homework"
 author: "Daniel Dittenhafer"
 date: "August 27, 2015"
-output: html_document
+output: pdf_document
 ---
 
 ### Page 8, Problem #10
@@ -15,9 +15,10 @@ output: html_document
 
 The dynamical system can be modeled using the following equation:
 
-\[a_{n+1} = a_n + 0.01a_n - 1000, a_0 = 50000\]
+\[a_{n+1} = a_n + 0.01a_n - 1000\]
+\[a_0 = 50000\]
 
-The `annuityModel` function defines the basic dynamical system:
+The `annuityModel` function, below, defines the basic dynamical system:
 
 ```{r}
 annuityModel <- function(a_n, i, w)
@@ -70,25 +71,67 @@ plot(result, main="Annuity")
 ### Page 17, Problem #9
 
 ```{r}
+# Setup the vectors of data
 n <- 1:16
 speed <- n * 5
 a_n <- c(3,6,11,21,32,47,65,87,112,140,171,204,241,282,325,376)
+# Compute the delta between a_n and a_n+1
 d_an <- c()
 d_an[0] <- NA
 for(i in 1:length(a_n))
 {
   d_an[i] <- a_n[i] - a_n[i - 1] 
 }
-
+# Convert to data.frame
 d9 <- data.frame(n, speed, a_n, d_an)
-
-d9
 ```
 
-#### (a) The visualization below plots the change in \(a_n\) vs \(n\). 
+#### (a) Calculate and plot the change \(\Delta a_n\) versus \(n\). Does the graph reasonably approximate a linear relationship?
 
-As you can see, the graph does reasonably approximate a linear relationship.
+The visualization below plots the change in \(a_n\) vs \(n\). As you can see, the graph does reasonably approximate a linear relationship.
 
 ```{r, echo=FALSE}
-plot(d9[,c("n", "d_an")], main="Change in a_n vs n")
+plot(d9[,c("d_an", "n")], main="Change in a_n vs n")
 ```
+
+#### (b) Based on your conclusions in part (a), find a difference equation model for the stopping distance data. Test your model by plotting the errors in the predicted values against \(n\). Discuss the appropriateness of the model.
+
+```{r}
+# First find slope of the estimated difference line
+delta_d_an <- max(d9$d_an, na.rm=TRUE)
+delta_n <- max(d9$n)
+r <-  delta_d_an / delta_n
+r
+# Define the difference equation model
+stoppingDistanceModel <- function(n, a, r)
+{
+    an <- r * n + a
+    return(an)
+}
+
+m <- c()
+m[1] <- 0
+for(i in 2:length(a_n))
+{
+  m[i] <- stoppingDistanceModel(i, m[i-1], r)
+}
+
+d9a <- cbind(d9, m)
+d9a
+
+library(ggplot2)
+d9viz <- ggplot(data=d9a, aes(x=n)) + 
+  geom_point(color="blue", aes(y=a_n)) + 
+  geom_point(aes(y=m)) +
+  labs(title="Model (black) vs Actual (blue)")
+d9viz
+
+# Plot the errors in predicted values against n
+d9a$err <- d9a$a_n - d9a$m
+d9ErrViz <- ggplot(data=d9a, aes(x=n)) + 
+  geom_point(color="red", aes(y=err)) +
+  labs(title="Model Error")
+d9ErrViz
+```
+
+This is a very crude linear based model. The actual change in not quite linear, which contributes to the error. As larger values of \(n\) are applied, the model error increases steadily. The model works as a rough estimator, but there is definitely room for improvement.
