@@ -135,3 +135,91 @@ d9ErrViz
 ```
 
 This is a very crude linear based model. The actual change in not quite linear, which contributes to the error. As larger values of \(n\) are applied, the model error increases steadily. The model works as a rough estimator, but there is definitely room for improvement.
+
+### Page 34, #13
+
+The rumor model from the text is shown below:
+
+\[r_{n+1}=r_n + kr+n(1000 - n)\]
+
+We recreate this model in R code below, in the `rumorModel` function:
+
+```{r}
+rumorModel <- function(k, rn, n)
+{
+  rn1 <- rn + (k * rn * (1000 - n))
+  return (rn1)
+}
+
+```
+
+Next we define the starting assumptions of \(k=0.001\), and \(r_0=4\), followed by a loop to iterator over the days, \(n\), until all 1000 people have heard the rumor.
+
+```{r}
+rnx <- c()
+rnx[1] <- 4
+k <- 0.001
+for(n in 1:100)
+{
+  rnx[n + 1] <- rumorModel(k, rnx[n], n)
+  if(rnx[n+1] > 1000)
+  {
+    break
+  }
+}
+```
+
+The rumor spread throughout the company after `r n+1` days.
+
+```{r}
+# Show number of people who've heard the rumor each day.
+rnx
+```
+
+```{r, echo=FALSE}
+plot(rnx, main = "Spread of a Rumor at Company")
+```
+
+### Page 55, #6
+
+\[P_{n+1}=P_n-0.1(Q_n-500)\]
+
+\[Q_{n+1}=Q_n+0.2(P_n-100)\]
+
+\[Q_n=Q_{n+1}-0.2(P_n-100)\]
+
+```{r}
+
+priceModel <- function(pn, qn)
+{
+  pnx <- pn - (0.1 * (qn - 500))
+  return (pnx)
+}
+
+quantityModel <- function(pn, qn)
+{
+  qnx <- qn + (0.2 * (pn - 100))
+  return (qnx)
+}
+
+execModelLoop <- function(p0, q0, maxN)
+{
+  pnc <- c()
+  pnc[1] <- p0
+  
+  qnc <- c()
+  qnc[1] <- q0
+  for(n in 1:maxN)
+  {
+    pnc[n + 1] <- priceModel(pnc[n], qnc[n])
+    qnc[n + 1] <- quantityModel(pnc[n], qnc[n])
+  }
+  
+  dfPQ <- data.frame(pnc, qnc)
+  return (dfPQ)
+}
+
+# First run the equilibrium values and show result.
+execModelLoop(100, 500, 10)
+
+```
